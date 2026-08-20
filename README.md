@@ -1,12 +1,23 @@
 # CrimeVision AI – Intelligent Multimodal Forensic Analysis Platform
 
 A production-ready full-stack application that reconstructs crime scenes in interactive 3D by analyzing images, videos, audio statements, and written reports using state-of-the-art AI models.
+## 🔬 Object Detection
 
+During the development of the project, I experimented with **YOLO** for object detection. As the project evolved, I also explored and integrated **RT-DETR** into the object detection pipeline.
+
+This provided hands-on experience with two different object detection approaches and helped in evaluating the models for the project's multimodal forensic analysis workflow.
+
+**Object Detection Models Explored:**
+- YOLO – Initial experimentation and implementation
+- RT-DETR – Later integrated into the updated pipeline
 ## 🎯 Features
 
 - **Multimodal Evidence Processing**: Analyze images, videos, audio, and text documents
 - **AI-Powered Analysis**:
-  - Object detection with RT-DETR
+  - Object detection using **YOLO** during the initial development and experimentation phase
+  - Object detection pipeline later upgraded to **RT-DETR**
+  - Image segmentation with SAM
+  - Vision-language matching with CLIP
   - Speech-to-text with Whisper
   - Entity extraction from reports
   - Cross-modal fusion with LLaVA
@@ -154,6 +165,7 @@ Edit `backend/config.py` to customize:
 
 | **ModelPurposeSource** |                          |                   |
 | ---------------------- | ------------------------ | ----------------- |
+| YOLO                   | Object Detection         | HuggingFace       |
 | RT-DETR                | Object Detection         | HuggingFace       |
 | SAM                    | Segmentation             | Facebook Research |
 | CLIP                   | Vision-Language Matching | OpenAI            |
