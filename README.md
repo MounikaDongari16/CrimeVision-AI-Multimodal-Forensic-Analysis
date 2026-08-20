@@ -27,7 +27,6 @@ This provided hands-on experience with two different object detection approaches
 
 ## 📁 Project Structure
 
-
 crime/
 ├── backend/
 │   ├── app.py                 # Flask application
@@ -67,7 +66,6 @@ crime/
 └── docs/
     ├── API.md                 # API documentation
     └── ARCHITECTURE.md        # System architecture
-
 
 ## 🚀 Quick Start
 
