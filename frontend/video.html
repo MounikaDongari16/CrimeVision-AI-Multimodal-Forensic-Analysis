@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Analysis - Crime Scene Reconstruction</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chat_ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .video-container {
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .crime-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .badge-robbery {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .badge-accident {
+            background: #f39c12;
+            color: #fff;
+        }
+
+        .badge-fight {
+            background: #e67e22;
+            color: #fff;
+        }
+
+        .badge-murder {
+            background: #9b59b6;
+            color: #fff;
+        }
+
+        .badge-suicide {
+            background: #34495e;
+            color: #fff;
+        }
+
+        .badge-normal {
+            background: #2ecc71;
+            color: #fff;
+        }
+
+        .badge-unknown {
+            background: #95a5a6;
+            color: #fff;
+        }
+
+        .conflict-box {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .conflict-title {
+            color: #e74c3c;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .conflict-item {
+            font-size: 11px;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">CrimeVision AI – Intelligent Multimodal Forensic Analysis Platform</h1>
+            <div class="header-info"><span class="case-id">Mode: <span style="color:var(--primary)">Video
+                        Analysis</span></span></div>
+        </div>
+    </header>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="panel nav-panel">
+                <nav class="nav-menu">
+                    <a href="image.html" class="nav-item"><span class="nav-icon">🖼️</span>Image Analysis</a>
+                    <a href="audio.html" class="nav-item"><span class="nav-icon">🎙️</span>Audio Analysis</a>
+                    <a href="video.html" class="nav-item active"><span class="nav-icon">🎥</span>Video Analysis</a>
+                </nav>
+            </div>
+            <div class="panel upload-panel">
+                <h2 class="panel-title">📁 Upload Video</h2>
+                <div class="upload-categories">
+                    <div class="upload-category" id="videoUploadZone">
+                        <div class="category-icon">🎥</div>
+                        <div class="category-info">
+                            <p class="category-title">Upload Video</p>
+                            <p class="category-subtitle">CCTV (.mp4, .avi, max 30s)</p>
+                        </div>
+                        <input type="file" id="videoInput" accept="video/*" hidden>
+                    </div>
+                </div>
+                <div id="fileInfo" class="uploaded-files"></div>
+                <button class="btn btn-primary btn-block" id="processBtn" disabled>🚀 Start Analysis</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Video Preview -->
+            <section class="panel">
+                <h2 class="panel-title">🎬 Video Evidence</h2>
+                <div class="video-container" id="videoPreviewContainer">
+                    <div class="scene-placeholder">
+                        <p>Upload a video to preview</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analysis Summary -->
+            <section class="panel" id="summaryPanel" style="display: none;">
+                <div id="crimeBadgeContainer"></div>
+                <h2 class="panel-title">📝 AI Visual Summary</h2>
+                <div id="videoDescription" style="font-size: 14px; line-height: 1.6; color: #eee; margin-bottom: 20px;">
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar - Stats & Timeline -->
+        <aside class="evidence-sidebar">
+            <!-- Objects Detected -->
+            <section class="panel" id="objectsPanel" style="display: none;">
+                <h2 class="panel-title">📦 Objects Detected</h2>
+                <div id="objectList" class="evidence-list"></div>
+            </section>
+
+            <!-- Timeline -->
+            <section class="panel" id="timelinePanel" style="display: none;">
+                <h2 class="panel-title">⏱️ Event Timeline</h2>
+                <div class="timeline-container"
+                    style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent;">
+                    <table class="evidence-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="position: sticky; top: 0; background: #1a1a1a; z-index: 1;">
+                                <th
+                                    style="text-align: left; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--primary);">
+                                    Time</th>
+                                <th
+                                    style="text-align: left; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--primary);">
+                                    Event</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timelineBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- AI Chat Panel -->
+            <section class="panel chat-panel" id="chatContainer"
+                style="opacity: 0.3; pointer-events: none; transition: opacity 0.3s; margin-top: 20px;">
+                <div class="chat-header">
+                    <span class="nav-icon">🤖</span>
+                    <h3>Ask AI about this Video</h3>
+                </div>
+                <div class="chat-history" id="chatHistory">
+                    <div class="chat-message message-ai">
+                        I've analyzed the video scene and timeline. Ask me anything about the actions or objects
+                        detected!
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask a question...">
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        <span class="nav-icon" style="margin:0; font-size:16px;">↗️</span>
+                    </button>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/chat_handler.js"></script>
+    <script src="js/video.js"></script>
+</body>
+
+</html>

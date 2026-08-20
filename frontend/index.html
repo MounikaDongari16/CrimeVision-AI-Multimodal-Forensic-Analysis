@@ -1,0 +1,195 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=image.html">
+    <title>Redirecting...</title>
+</head>
+
+<body>
+    <p>Redirecting to <a href="image.html">Image Analysis</a>...</p>
+</body>
+<!-- Header -->
+<header class="header">
+    <div class="header-content">
+        <h1 class="logo">CrimeVision AI – Intelligent Multimodal Forensic Analysis Platform</h1>
+        <div class="header-info">
+            <span class="case-id">Case: <span id="currentCaseId">None</span></span>
+            <button class="btn btn-secondary" id="newCaseBtn">New Case</button>
+        </div>
+    </div>
+</header>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Sidebar - Upload Panel -->
+    <aside class="sidebar">
+        <div class="panel upload-panel">
+            <h2 class="panel-title">📁 Upload Evidence</h2>
+
+            <div class="upload-categories">
+                <!-- Image Upload -->
+                <div class="upload-category" id="imageUploadZone">
+                    <div class="category-icon">🖼️</div>
+                    <div class="category-info">
+                        <p class="category-title">Upload Image</p>
+                        <p class="category-subtitle">Photos for recovery</p>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                </div>
+
+                <!-- Audio Upload -->
+                <div class="upload-category" id="audioUploadZone">
+                    <div class="category-icon">🎙️</div>
+                    <div class="category-info">
+                        <p class="category-title">Upload Audio</p>
+                        <p class="category-subtitle">Witness statements</p>
+                    </div>
+                    <input type="file" id="audioInput" accept="audio/*,.mp3,.wav,.m4a" multiple hidden>
+                </div>
+
+                <!-- Video Upload -->
+                <div class="upload-category" id="videoUploadZone">
+                    <div class="category-icon">🎥</div>
+                    <div class="category-info">
+                        <p class="category-title">Upload Video</p>
+                        <p class="category-subtitle">CCTV or footage</p>
+                    </div>
+                    <input type="file" id="videoInput" accept="video/*" multiple hidden>
+                </div>
+            </div>
+
+            <div class="uploaded-files" id="uploadedFiles">
+                <!-- Uploaded files will appear here -->
+            </div>
+
+            <button class="btn btn-primary btn-block" id="processBtn" disabled>
+                🚀 Start Processing
+            </button>
+
+
+        </div>
+
+        <!-- Processing Status -->
+        <div class="panel status-panel">
+            <h3 class="panel-subtitle">Processing Status</h3>
+            <div class="status-list" id="statusList">
+                <div class="status-item">
+                    <span class="status-label">Vision Analysis</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Audio Transcription</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Text Processing</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Multimodal Fusion</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Timeline Generation</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">3D Reconstruction</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Report Generation</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- 3D Scene Viewer -->
+        <section class="panel scene-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">🎯 3D Scene Reconstruction</h2>
+            </div>
+
+            <!-- Debug Blue Box (Moved) -->
+            <div id="blueBox"
+                style="background:#e3f2fd; padding:10px; margin: 10px 0 15px 0; border-radius: 4px; font-size: 12px; color: #333; display: none; border: 1px solid #b6d4fe;">
+                Waiting for audio...
+            </div>
+            <div class="scene-container" id="sceneContainer">
+                <div class="scene-placeholder">
+                    <div class="placeholder-icon">🏗️</div>
+                    <p>3D scene will appear here after processing</p>
+                </div>
+            </div>
+            <div class="scene-info" id="sceneInfo">
+                <span>Objects: <strong id="objectCount">0</strong></span>
+                <span>Confidence: <strong id="avgConfidence">0%</strong></span>
+            </div>
+        </section>
+
+        <!-- Timeline Viewer -->
+        <section class="panel timeline-panel">
+            <h2 class="panel-title">⏱️ Event Timeline</h2>
+            <div class="timeline-container" id="timelineContainer">
+                <div class="timeline-placeholder">
+                    <p>Timeline will be generated after processing</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Right Sidebar - Evidence Panel -->
+    <aside class="evidence-sidebar">
+        <div class="panel evidence-panel">
+            <h2 class="panel-title">📋 Evidence Summary</h2>
+
+            <div class="evidence-tabs">
+                <button class="tab-btn active" data-tab="detections">Detections</button>
+                <button class="tab-btn" data-tab="facts">Facts</button>
+                <button class="tab-btn" data-tab="entities">Entities</button>
+            </div>
+
+            <div class="evidence-content" id="evidenceContent">
+                <div class="tab-content active" id="detections-tab">
+                    <div class="evidence-placeholder">
+                        <p>No detections yet</p>
+                    </div>
+                </div>
+                <div class="tab-content" id="facts-tab">
+                    <div class="evidence-placeholder">
+                        <p>No facts extracted yet</p>
+                    </div>
+                </div>
+                <div class="tab-content" id="entities-tab">
+                    <div class="evidence-placeholder">
+                        <p>No entities extracted yet</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-actions">
+                <h3 class="panel-subtitle">Download Reports</h3>
+                <button class="btn btn-secondary btn-block" id="downloadJsonBtn" disabled>
+                    📄 Download JSON
+                </button>
+                <button class="btn btn-secondary btn-block" id="downloadPdfBtn" disabled>
+                    📕 Download PDF
+                </button>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/components/upload-panel.js"></script>
+<script src="js/components/scene3d.js"></script>
+<script src="js/components/timeline.js"></script>
+<script src="js/components/evidence-panel.js"></script>
+<script src="js/app.js"></script>
+</body>
+
+</html>

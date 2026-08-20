@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Analysis - Crime Scene Reconstruction</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chat_ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">CrimeVision AI – Intelligent Multimodal Forensic Analysis Platform</h1>
+            <div class="header-info">
+                <span class="case-id">Mode: <span style="color:var(--primary)">Audio Analysis</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar - Navigation & Upload -->
+        <aside class="sidebar">
+
+            <!-- Navigation Menu -->
+            <div class="panel nav-panel">
+                <nav class="nav-menu">
+                    <a href="image.html" class="nav-item">
+                        <span class="nav-icon">🖼️</span>
+                        <span class="nav-text">Image Analysis</span>
+                    </a>
+                    <a href="audio.html" class="nav-item active">
+                        <span class="nav-icon">🎙️</span>
+                        <span class="nav-text">Audio Analysis</span>
+                    </a>
+                    <a href="video.html" class="nav-item">
+                        <span class="nav-icon">🎥</span>
+                        <span class="nav-text">Video Analysis</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="panel upload-panel">
+                <h2 class="panel-title">📁 Upload Audio</h2>
+
+                <div class="upload-categories">
+                    <!-- Audio Upload Only -->
+                    <div class="upload-category" id="audioUploadZone">
+                        <div class="category-icon">🎙️</div>
+                        <div class="category-info">
+                            <p class="category-title">Upload Audio</p>
+                            <p class="category-subtitle">Witness statements (.mp3, .wav)</p>
+                        </div>
+                        <input type="file" id="audioInput" accept="audio/*,.mp3,.wav,.m4a" multiple hidden>
+                    </div>
+                </div>
+
+                <div class="uploaded-files" id="uploadedFiles">
+                    <!-- Uploaded files will appear here -->
+                </div>
+
+                <button class="btn btn-primary btn-block" id="processBtn" disabled>
+                    🚀 Start Processing
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Transcript Blue Box -->
+            <section class="panel">
+                <h2 class="panel-title">📝 Live Transcript</h2>
+                <div id="blueBox"
+                    style="background:#e3f2fd; padding:15px; border-radius: 4px; font-size: 14px; color: #333; min-height: 60px; border: 1px solid #b6d4fe;">
+                    Waiting for audio input...
+                </div>
+            </section>
+
+            <!-- Evidence / Analysis Results -->
+            <section class="panel">
+                <h2 class="panel-title">🔍 AI Intelligence Report</h2>
+                <div id="enriched-findings">
+                    <!-- Dynamic Content from Evidence Panel -->
+                    <div class="evidence-placeholder">
+                        Results will appear here after processing.
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Helper Sidebar (Optional or removed for cleaner look, strictly separate pages) -->
+        <!-- User asked for "No empty boxes". Let's stick to the main column being the focus, 
+             or maybe keep the Evidence Sidebar for consistency but strictly Audio content.
+             Let's put the Timeline here. -->
+
+        <aside class="evidence-sidebar">
+            <!-- Timeline Viewer -->
+            <section class="panel timeline-panel">
+                <h2 class="panel-title">⏱️ AI Generated Crime Event Timeline</h2>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px;">(from witness audio
+                    statement)</p>
+                <div class="timeline-container" id="timelineContainer">
+                    <table class="evidence-table" id="timelineTable"
+                        style="width: 100%; border-collapse: collapse; display: none;">
+                        <thead>
+                            <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <th style="padding: 8px; color: var(--primary);">Time</th>
+                                <th style="padding: 8px; color: var(--primary);">Event</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timelineBody">
+                            <!-- Events injected here -->
+                        </tbody>
+                    </table>
+                    <div id="timelinePlaceholder" class="timeline-placeholder">
+                        <p>Timeline will appear here after upload.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Chat Panel -->
+            <section class="panel chat-panel" id="chatContainer"
+                style="opacity: 0.3; pointer-events: none; transition: opacity 0.3s; margin-top: 20px;">
+                <div class="chat-header">
+                    <span class="nav-icon">🤖</span>
+                    <h3>Ask AI about this Audio</h3>
+                </div>
+                <div class="chat-history" id="chatHistory">
+                    <div class="chat-message message-ai">
+                        I've analyzed the audio transcript and timeline. Ask me anything about the events detected!
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask a question...">
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        <span class="nav-icon" style="margin:0; font-size:16px;">↗️</span>
+                    </button>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/components/upload-panel.js"></script>
+    <script src="js/components/evidence-panel.js"></script>
+    <script src="js/chat_handler.js"></script>
+    <!-- Dedicated Audio Logic -->
+    <script src="js/audio.js"></script>
+</body>
+
+</html>

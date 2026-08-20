@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis - Crime Scene Reconstruction</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chat_ui.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">CrimeVision AI – Intelligent Multimodal Forensic Analysis Platform</h1>
+            <div class="header-info">
+                <span class="case-id">Mode: <span style="color:var(--primary)">Image Analysis</span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar - Navigation & Upload -->
+        <aside class="sidebar">
+
+            <!-- Navigation Menu -->
+            <div class="panel nav-panel">
+                <nav class="nav-menu">
+                    <a href="image.html" class="nav-item active">
+                        <span class="nav-icon">🖼️</span>
+                        <span class="nav-text">Image Analysis</span>
+                    </a>
+                    <a href="audio.html" class="nav-item">
+                        <span class="nav-icon">🎙️</span>
+                        <span class="nav-text">Audio Analysis</span>
+                    </a>
+                    <a href="video.html" class="nav-item">
+                        <span class="nav-icon">🎥</span>
+                        <span class="nav-text">Video Analysis</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="panel upload-panel">
+                <h2 class="panel-title">📁 Upload Image</h2>
+
+                <div class="upload-categories">
+                    <!-- Image Upload Only -->
+                    <div class="upload-category" id="imageUploadZone">
+                        <div class="category-icon">🖼️</div>
+                        <div class="category-info">
+                            <p class="category-title">Upload Image</p>
+                            <p class="category-subtitle">Photos for recovery</p>
+                        </div>
+                        <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                    </div>
+                </div>
+
+                <div class="uploaded-files" id="uploadedFiles">
+                    <!-- Uploaded files will appear here -->
+                </div>
+
+                <button class="btn btn-primary btn-block" id="processBtn" disabled>
+                    🚀 Start Processing
+                </button>
+            </div>
+
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- 3D Scene Viewer -->
+            <section class="panel scene-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">🎯 3D Scene Reconstruction</h2>
+                    <div class="scene-controls">
+                        <button class="btn btn-icon" id="resetViewBtn" title="Reset View">🔄</button>
+                    </div>
+                </div>
+
+                <div class="scene-container" id="sceneContainer">
+                    <div class="scene-placeholder">
+                        <div class="placeholder-icon">🏗️</div>
+                        <p>3D scene will appear here after processing</p>
+                    </div>
+                </div>
+                <div class="scene-info" id="sceneInfo">
+                    <span>Objects: <strong id="objectCount">0</strong></span>
+                    <span>Confidence: <strong id="avgConfidence">0%</strong></span>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar - Evidence Panel -->
+        <aside class="evidence-sidebar">
+            <div class="panel evidence-panel">
+                <h2 class="panel-title">📋 Evidence Analysis</h2>
+
+                <!-- AI Scene Summary -->
+                <div class="fact-section" id="summarySection"
+                    style="display: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px;">
+                    <h3 class="fact-title" style="color: var(--primary); font-size: 14px;">✨ AI Scene Summary</h3>
+                    <div id="aiSummaryValue"
+                        style="font-size: 13px; line-height: 1.5; color: #fff; font-style: italic;">
+                        Generating summary...
+                    </div>
+                </div>
+
+                <!-- Visual Summary -->
+                <div class="fact-section">
+                    <h3 class="fact-title">👁️ Visual Summary</h3>
+                    <div id="visualDescription" class="fact-content">
+                        Waiting for analysis...
+                    </div>
+                </div>
+
+                <!-- Fact Grid -->
+                <div class="fact-grid">
+                    <div class="fact-card">
+                        <span class="fact-icon">📦</span>
+                        <span class="fact-label">Objects</span>
+                        <span class="fact-value" id="objectsValue">-</span>
+                    </div>
+                    <div class="fact-card">
+                        <span class="fact-icon">👤</span>
+                        <span class="fact-label">Persons</span>
+                        <span class="fact-value" id="personsValue">-</span>
+                    </div>
+                    <div class="fact-card">
+                        <span class="fact-icon">🔫</span>
+                        <span class="fact-label">Weapons</span>
+                        <span class="fact-value" id="weaponsValue">-</span>
+                    </div>
+                    <div class="fact-card">
+                        <span class="fact-icon">📍</span>
+                        <span class="fact-label">Location</span>
+                        <span class="fact-value" id="locationValue">-</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="fact-section" style="margin-top: 15px;">
+                    <h3 class="fact-title">⚡ Actions Detected</h3>
+                    <div id="actionsValue" class="fact-content">-</div>
+                </div>
+
+                <!-- Evidence Facts -->
+                <div class="fact-section"
+                    style="margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); padding: 10px; border-radius: 6px;">
+                    <h3 class="fact-title">🕵️‍♂️ Evidence Facts</h3>
+                    <div id="evidenceFactsList" class="fact-content"
+                        style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                        Inventory of detected items...
+                    </div>
+                </div>
+
+                <!-- Scenarios -->
+                <div class="fact-section"
+                    style="margin-top: 15px; background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.2); padding: 10px; border-radius: 6px;">
+                    <h3 class="fact-title" style="color: var(--primary);">🧠 AI Application Scenarios</h3>
+                    <div id="scenariosList" class="scenario-list">
+                        <!-- Scenarios will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Download Report -->
+                <div class="report-actions" style="margin-top: 20px;">
+                    <button class="btn btn-primary btn-block" id="downloadReportBtn" disabled>
+                        📄 Download PDF Report
+                    </button>
+                    <div id="downloadLinkContainer" style="margin-top: 10px; text-align: center; display: none;"></div>
+                </div>
+            </div>
+
+            <!-- AI Chat Panel -->
+            <section class="panel chat-panel" id="chatContainer"
+                style="opacity: 0.3; pointer-events: none; transition: opacity 0.3s; margin-top: 20px;">
+                <div class="chat-header">
+                    <span class="nav-icon">🤖</span>
+                    <h3>Ask AI about this Image</h3>
+                </div>
+                <div class="chat-history" id="chatHistory">
+                    <div class="chat-message message-ai">
+                        I've analyzed the image. Ask me anything about the objects, people, or scene detected!
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask a question...">
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        <span class="nav-icon" style="margin:0; font-size:16px;">↗️</span>
+                    </button>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/components/upload-panel.js"></script>
+    <script src="js/components/scene3d.js"></script>
+    <script src="js/components/evidence-panel.js"></script>
+    <script src="js/chat_handler.js"></script>
+    <!-- Dedicated Image Logic -->
+    <script src="js/image.js"></script>
+</body>
+
+</html>
